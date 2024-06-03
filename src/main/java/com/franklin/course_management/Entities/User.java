@@ -26,7 +26,6 @@ public class User {
     public long Id;
 	
 	@Column(name = "username")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String username;
 	
 	@NotEmpty
