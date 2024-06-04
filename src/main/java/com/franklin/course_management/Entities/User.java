@@ -1,13 +1,7 @@
 package com.franklin.course_management.Entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
@@ -25,7 +19,13 @@ public class User {
     @GeneratedValue(strategy=GenerationType.AUTO)
     public long Id;
 	
-	@Column(name = "username")
+	@NotEmpty
+    @Email
+    @Column(name = "email", unique = true)
+    private String email;
+	
+	@NotEmpty
+	@Column(name = "username", unique = true)
 	private String username;
 	
 	@NotEmpty
@@ -53,20 +53,33 @@ public class User {
 	
 	
 	public User() {
-		super();
+		verified = false;
 	}
 	
-	public User(String username, String password) {
+	public User(String email, String username, String password, boolean verified, String firstName, String lastName, Role role) {
+		this.email = email;
 		this.username = username;
 		this.password = password;
+		this.verified = verified;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.role = role;
 	}
-
+	
 	public long getId() {
 		return Id;
 	}
 
 	public void setId(long id) {
 		Id = id;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getUsername() {

@@ -7,4 +7,6 @@ import com.franklin.course_management.Entities.User;
 public interface UserRepository extends CrudRepository<User, Long> {
 
     User findById(long id);
+    
+    User findByEmail(String email);
  }
