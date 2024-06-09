@@ -17,6 +17,26 @@
     <div th:replace="general.html :: signedInNavBar"></div>
     <div class="center">
         <h1>DevU Gradebook</h1>
+        <div>
+                <div class="center mt-3">
+                    <h2 class="">Log in below</h2>
+                </div>
+                <form class="col-lg-4 offset-lg-4" action="#" th:action="@{/login}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Username: </label>
+                        <input class="form-control" type="text" th:name="username" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password: </label>
+                        <input class="form-control" type="password" th:name="password" required />
+                    </div>
+                    <input type="submit" value="Log In" class="btn btn-primary" /><br><br>
+                    <a href="forgotpassword">Forgot Password?</a><br><br><br><br>
+                    <h4 class="">Don't have an account?</h4><br>
+                    <input type="button" value="Sign Up" class="btn btn-primary" onclick="" />
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 

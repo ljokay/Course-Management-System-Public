@@ -3,6 +3,9 @@ package com.franklin.course_management.Entities;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.persistence.*;
+
+import java.util.Date;
+
 import com.franklin.course_management.GradeLevelEnum.*;
 
 @Entity
@@ -25,6 +28,14 @@ public class Course {
 	@NotEmpty
 	@Column(name = "name")
 	public String name;
+	
+	@NotEmpty
+	@Column(name = "start_date")
+	public Date startDate;
+	
+	@NotEmpty
+	@Column(name = "end_date")
+	public Date end_date;
 	
 	@NotEmpty
 	@Column(name="credits")
