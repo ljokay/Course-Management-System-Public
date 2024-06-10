@@ -42,6 +42,10 @@ public class Course {
 	public int credits;
 	
 	@NotEmpty
+	@Column(name="seats")
+	public int seats;
+	
+	@NotEmpty
 	@Enumerated(EnumType.STRING)
 	@Column(name = "course_grade")
     private GradeLevel grade;
