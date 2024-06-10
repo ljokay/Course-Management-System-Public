@@ -13,13 +13,17 @@
             <h2 id="subtitle" class="dark-back white inline-block rounded">Gradebook</h2>
         </div>
     </div>
-    <div th:fragment="signedInNavBar">
+    <div th:fragment="generalNavBar">
         <ul id="nav-bar" class="dark-back no-margin no-padding">
             <li>
                 <a href="/index">Home</a>
             </li>
+        </ul>
+    </div>
+    <div th:fragment="teacherNavBar">
+        <ul id="nav-bar" class="dark-back no-margin no-padding">
             <li>
-                <a href="/page2">Page 2</a>
+                <a href="/index">Home</a>
             </li>
         </ul>
     </div>
