@@ -7,7 +7,7 @@ Project Name:
 Description:
 ```
     The course management system will allow users to sign up as an admin, student, or teacher. Teachers 
-    will be able to assign grades and creats assignments. Students will be able to register for courses,
+    will be able to assign grades and creates assignments. Students will be able to register for courses,
     with a max of 16 credits. Administrators will be allowed to create, delete, and edit courses while also
     being able to assign courses to teachers. 
 ```
