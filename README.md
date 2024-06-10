@@ -26,6 +26,5 @@ Technology Stack:
 Team Members:
 ```
     1. Erron James - Team Lead
-    2. Jeffrey Predmore - Senior Programmer
     3. Landen Bock - Junior Programmer
 ```
