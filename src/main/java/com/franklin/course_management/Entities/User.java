@@ -34,7 +34,7 @@ public class User {
 	
 	@NotEmpty
     @Column(name = "verified")
-    private boolean verified;
+    private String verified;
 
     @NotEmpty
     @Column(name = "firstName")
@@ -53,10 +53,10 @@ public class User {
 	
 	
 	public User() {
-		verified = false;
+		verified = "N";
 	}
 	
-	public User(String email, String username, String password, boolean verified, String firstName, String lastName, Role role) {
+	public User(String email, String username, String password, String verified, String firstName, String lastName, Role role) {
 		this.email = email;
 		this.username = username;
 		this.password = password;
@@ -98,11 +98,11 @@ public class User {
 		this.password = password;
 	}
 
-	public boolean isVerified() {
+	public String isVerified() {
 		return verified;
 	}
 
-	public void setVerified(boolean verified) {
+	public void setVerified(String verified) {
 		this.verified = verified;
 	}
 

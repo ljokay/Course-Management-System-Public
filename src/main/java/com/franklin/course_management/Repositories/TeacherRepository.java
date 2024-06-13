@@ -7,4 +7,6 @@ import com.franklin.course_management.Entities.Teacher;
 public interface TeacherRepository extends CrudRepository<Teacher, Long> {
 
     Teacher findById(long id);
+    
+    Teacher findByUserId(long userId);
  }

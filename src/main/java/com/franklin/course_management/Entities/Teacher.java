@@ -26,8 +26,7 @@ public class Teacher {
 	
 	}
 	
-	public Teacher(long id, long userId, int credits) {
-		this.id = id;
+	public Teacher(long userId, int credits) {
         this.userId = userId;
         this.credits = credits;
 	}

@@ -7,4 +7,6 @@ import com.franklin.course_management.Entities.Student;
 public interface StudentRepository extends CrudRepository<Student, Long> {
 
     Student findById(long id);
+    
+    Student findByUserId(long userId);
  }

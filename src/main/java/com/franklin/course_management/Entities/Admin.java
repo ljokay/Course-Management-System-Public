@@ -22,8 +22,7 @@ public class Admin {
 	
 	}
 	
-	public Admin(long id, long userId ) {
-		this.id = id;
+	public Admin(long userId) {
         this.userId = userId;
 	}
 	
