@@ -7,6 +7,19 @@
 </head>
 
 <body>
+    <div th:fragment="header">
+        <div class="header-container center">
+            <h1 id="title" class="blue no-margin">Dev University</h1>
+            <h2 id="subtitle" class="dark-back white inline-block rounded">Gradebook</h2>
+        </div>
+    </div>
+    <div th:fragment="generalNavBar">
+        <ul id="nav-bar" class="dark-back no-margin no-padding">
+            <li>
+                <a href="/index">Home</a>
+            </li>
+        </ul>
+    </div>
     <div th:fragment="teacherNavBar">
         <ul id="teacher-nav-bar" class="dark-back no-margin no-padding">
             <li>
