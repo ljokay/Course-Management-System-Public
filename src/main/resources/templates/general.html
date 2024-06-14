@@ -7,23 +7,48 @@
 </head>
 
 <body>
-    <div th:fragment="header">
-        <div class="header-container center">
-            <h1 id="title" class="blue no-margin">Dev University</h1>
-            <h2 id="subtitle" class="dark-back white inline-block rounded">Gradebook</h2>
-        </div>
-    </div>
-    <div th:fragment="generalNavBar">
-        <ul id="nav-bar" class="dark-back no-margin no-padding">
+    <div th:fragment="teacherNavBar">
+        <ul id="teacher-nav-bar" class="dark-back no-margin no-padding">
             <li>
-                <a href="/index">Home</a>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/">Courses</a>
+            </li>
+            <li>
+                <a href="/">Students</a>
             </li>
         </ul>
     </div>
-    <div th:fragment="teacherNavBar">
-        <ul id="nav-bar" class="dark-back no-margin no-padding">
+    <div th:fragment="studentNavBar">
+        <ul id="student-nav-bar" class="dark-back no-margin no-padding">
             <li>
-                <a href="/index">Home</a>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/">Edit Schedule</a>
+            </li>
+            <li>
+                <a href="/">Current Courses</a>
+            </li>
+            <li>
+                <a href="/">Grades</a>
+            </li>
+        </ul>
+    </div>
+    <div th:fragment="adminNavBar">
+        <ul id="admin-nav-bar" class="dark-back no-margin no-padding">
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/">Create Course</a>
+            </li>
+            <li>
+                <a href="/">Courses</a>
+            </li>
+            <li>
+                <a href="/">Assign Course</a>
             </li>
         </ul>
     </div>
