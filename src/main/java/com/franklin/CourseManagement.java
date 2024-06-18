@@ -53,8 +53,8 @@ public class CourseManagement {
 //			studentRepo.save(s1);
 //		}
 		
-		studentRepo.deleteAll();
-		userRepo.deleteAll();
+//		studentRepo.deleteAll();
+//		userRepo.deleteAll();
 		
 		
 		return args -> {

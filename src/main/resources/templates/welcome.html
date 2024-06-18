@@ -14,18 +14,26 @@
 
 <body>
     <div th:replace="general.html :: header"></div>
-    <div th:replace="general.html :: generalNavBar"></div>
-    <div class="center">
-        <h1>Welcome <span th:text="${role}"></span> - <span th:text="${name}"></span></h1>
-        <div th:if="${role == 'Student'}">
-        	<h2>You're currently enrolled in courses totaling <span th:text="${credits}"></span> credits.</h2>
-        </div>
-        <div th:if="${role == 'Teacher'}">
-        	<h2>You're currently teaching a total of <span th:text="${credits}"></span> credits.</h2>
-        </div>
-         <div th:if="${role == 'Admin'}">
-        	<h2>Create courses and assign them to teachers!</h2>
-        </div>
+    <div th:if="${role} == 'STUDENT'">
+    	<div th:replace="general.html :: studentNavBar"></div>
+		    <div class="center">
+		        <h1>Welcome <span th:text="${role}"></span> - <span th:text="${name}"></span></h1>
+		        	<h2>You're currently enrolled in courses totaling <span th:text="${credits}"></span> credits.</h2>
+		    </div>
+    </div>
+    <div th:if="${role} == 'TEACHER'">
+    	<div th:replace="general.html :: teacherNavBar"></div>
+		    <div class="center">
+		        <h1>Welcome <span th:text="${role}"></span> - <span th:text="${name}"></span></h1>
+		        	<h2>You're currently teaching a total of <span th:text="${credits}"></span> credits.</h2>
+    		</div>
+    </div>
+     <div th:if="${role} == 'ADMIN'">
+    	<div th:replace="general.html :: adminNavBar"></div>
+    		<div class="center">
+		        <h1>Welcome <span th:text="${role}"></span> - <span th:text="${name}"></span></h1>
+        			<h2>Create courses and assign them to teachers!</h2>
+        	</div>
     </div>
 </body>
 

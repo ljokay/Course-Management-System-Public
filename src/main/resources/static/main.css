@@ -99,3 +99,13 @@ td a:hover {
     font-size: 16px;
 }
 
+.table-dark-custom {
+           background-color: #343a40;
+           color: #ffffff;
+}
+
+.table-dark-custom th,
+.table-dark-custom td {
+    border-color: #454d55;
+}
+

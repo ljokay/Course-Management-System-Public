@@ -41,7 +41,7 @@ public class BaseController implements ErrorController {
     @Autowired
     private EmailSenderService emailSenderService;
 
-    @GetMapping("/index")
+    @GetMapping(value = {"/", "", "/index"})
     public String index() {
         return "index";
     }
@@ -157,7 +157,7 @@ public class BaseController implements ErrorController {
     		request.getSession().setAttribute("user", user);
     		
     		model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
-    		model.addAttribute("role", user.getRole().toString().charAt(0) + user.getRole().toString().substring(1).toLowerCase());
+    		model.addAttribute("role", user.getRole().toString());
     		
     		if (user.getRole() == Role.STUDENT) {
     			Student s = studentRepo.findByUserId(user.getId());
@@ -167,10 +167,31 @@ public class BaseController implements ErrorController {
     			Teacher t = teacherRepo.findByUserId(user.getId());
     			model.addAttribute("credits", t.getCredits());
     		}
+
     		return "welcome";
 		} else {
     		model.addAttribute("error", "Incorrect Credentials, please try again.");
             return "index";
 		}
+    }
+    
+    @GetMapping("/welcome")
+    public String welcome(Model model,
+            HttpServletRequest request) {
+    	User user = (User) request.getSession().getAttribute("user");
+		
+		if (user.getRole() == Role.STUDENT) {
+			Student s = studentRepo.findByUserId(user.getId());
+			model.addAttribute("credits", s.getCredits());
+		}
+		if (user.getRole() == Role.TEACHER) {
+			Teacher t = teacherRepo.findByUserId(user.getId());
+			model.addAttribute("credits", t.getCredits());
+		}
+    	
+    	model.addAttribute("role", user.getRole().toString());
+    	model.addAttribute("name", user.getFirstName() + " " + user.getLastName());
+    	
+    	return "welcome";
     }
 }

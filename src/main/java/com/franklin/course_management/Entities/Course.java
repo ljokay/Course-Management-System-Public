@@ -55,12 +55,14 @@ public class Course {
 		
 	}
 	
-	public Course (long teacherId, String description, String name, int credits, GradeLevel grade) {
+	public Course (long teacherId, String description, String name, int credits, GradeLevel grade, Date startDate, Date end_date) {
 		this.teacherId = teacherId;
 		this.description = description;
 		this.name = name;
 		this.credits = credits;
 		this.grade = grade;
+		this.startDate = startDate;
+		this.end_date = end_date;
 	}
 
 	public long getId() {

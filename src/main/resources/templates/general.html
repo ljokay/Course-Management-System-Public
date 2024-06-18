@@ -21,7 +21,7 @@
         </ul>
     </div>
     <div th:fragment="teacherNavBar">
-        <ul id="teacher-nav-bar" class="dark-back no-margin no-padding">
+        <ul id="nav-bar" class="dark-back no-margin no-padding">
             <li>
                 <a href="/index">Home</a>
             </li>
@@ -34,7 +34,7 @@
         </ul>
     </div>
     <div th:fragment="studentNavBar">
-        <ul id="student-nav-bar" class="dark-back no-margin no-padding">
+        <ul id="nav-bar" class="dark-back no-margin no-padding">
             <li>
                 <a href="/index">Home</a>
             </li>
@@ -50,18 +50,15 @@
         </ul>
     </div>
     <div th:fragment="adminNavBar">
-        <ul id="admin-nav-bar" class="dark-back no-margin no-padding">
+        <ul id="nav-bar" class="dark-back no-margin no-padding">
             <li>
-                <a href="/index">Home</a>
+                <a href="/welcome">Home</a>
             </li>
             <li>
-                <a href="/">Create Course</a>
+                <a href="/createCourse">Create Course</a>
             </li>
             <li>
-                <a href="/">Courses</a>
-            </li>
-            <li>
-                <a href="/">Assign Course</a>
+                <a href="/courses">Courses</a>
             </li>
         </ul>
     </div>
