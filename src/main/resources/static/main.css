@@ -79,6 +79,10 @@ td a:hover {
     padding: 1em;
 }
 
+#nav-bar li:last-child {
+    margin-left: auto;
+}
+
 #subtitle {
     padding: 0.15em;
     margin: 0.5em 0;
@@ -108,4 +112,3 @@ td a:hover {
 .table-dark-custom td {
     border-color: #454d55;
 }
-

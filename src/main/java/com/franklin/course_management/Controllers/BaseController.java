@@ -1,5 +1,6 @@
 package com.franklin.course_management.Controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +39,32 @@ public class BaseController implements ErrorController {
 	@Autowired
 	AdminRepository adminRepo;
 	
+	@Autowired
+	StudentCoursesRepository studentCoursesRepo;
+	
     @Autowired
     private EmailSenderService emailSenderService;
 
     @GetMapping(value = {"/", "", "/index"})
     public String index() {
+    	
         return "index";
     }
     
     @GetMapping("/signup")
     public String signUp(){
         return "signup";
+    }
+    
+    @GetMapping("/signout")
+    public String signOut( HttpServletRequest request,
+    		 RedirectAttributes redirectAttributes) {
+    	
+    	
+    	request.getSession().setAttribute("user", null);
+    	
+    	
+    	return "index";
     }
     
     @PostMapping("/signup")
@@ -168,7 +184,7 @@ public class BaseController implements ErrorController {
     			model.addAttribute("credits", t.getCredits());
     		}
 
-    		return "welcome";
+    		return "redirect:/welcome";
 		} else {
     		model.addAttribute("error", "Incorrect Credentials, please try again.");
             return "index";
@@ -177,12 +193,19 @@ public class BaseController implements ErrorController {
     
     @GetMapping("/welcome")
     public String welcome(Model model,
-            HttpServletRequest request) {
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes) {
     	User user = (User) request.getSession().getAttribute("user");
+    	
+    	if (user == null) {
+    		return "redirect:/index";
+    	}
 		
 		if (user.getRole() == Role.STUDENT) {
 			Student s = studentRepo.findByUserId(user.getId());
+			List<StudentCourses> c = studentCoursesRepo.findByStudentId(s.getId());
 			model.addAttribute("credits", s.getCredits());
+			model.addAttribute("size", c.size());
 		}
 		if (user.getRole() == Role.TEACHER) {
 			Teacher t = teacherRepo.findByUserId(user.getId());

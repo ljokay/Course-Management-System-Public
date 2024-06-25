@@ -20,13 +20,13 @@ public class StudentCourses {
     
     @NotEmpty
 	@Column(name="course_id")
-	public int courseId;
+	public long courseId;
 	
 	public StudentCourses() {
 	
 	}
 	
-	public StudentCourses(long studentId, int courseId) {
+	public StudentCourses(long studentId, long courseId) {
         this.studentId = studentId;
         this.courseId = courseId;
 	}
@@ -47,11 +47,11 @@ public class StudentCourses {
 		this.studentId = studentId;
 	}
 
-	public int getCourseId() {
+	public long getCourseId() {
 		return courseId;
 	}
 
-	public void setCourseId(int courseId) {
+	public void setCourseId(long courseId) {
 		this.courseId = courseId;
 	}
 	

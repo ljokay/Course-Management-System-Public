@@ -9,13 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import com.franklin.course_management.Entities.Admin;
-import com.franklin.course_management.Entities.Student;
+import com.franklin.course_management.Entities.Teacher;
 import com.franklin.course_management.Entities.User;
 import com.franklin.course_management.Entities.User.Role;
-import com.franklin.course_management.GradeLevelEnum.GradeLevel;
-import com.franklin.course_management.Repositories.AdminRepository;
-import com.franklin.course_management.Repositories.StudentRepository;
+import com.franklin.course_management.Repositories.TeacherRepository;
 import com.franklin.course_management.Repositories.UserRepository;
 
 @SpringBootApplication
@@ -25,10 +22,7 @@ public class CourseManagement {
     private UserRepository userRepo;
 	
 	@Autowired
-	private StudentRepository studentRepo;
-	
-	@Autowired
-	private AdminRepository adminRepo;
+	private TeacherRepository teacherRepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CourseManagement.class, args);
@@ -37,24 +31,11 @@ public class CourseManagement {
 	@Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		
-//		if (userRepo.findByEmail("jamese08@email.franklin.edu") == null) {
-//			User admin1 = new User("jamese08@email.franklin.edu", "testAdmin", "admin123456", "Y", "Steph", "Curry", Role.ADMIN);
-//			userRepo.save(admin1);
+//			User t1 = new User("test1234@gmail.com", "testTeacher2", "teacher123456", "Y", "Steph", "Curry", Role.TEACHER);
+//			userRepo.save(t1);
 //			
-//			Admin a = new Admin(admin1.getId());
-//			adminRepo.save(a);
-//		}
-//		
-//		if (userRepo.findByEmail("ejames@lec.edu") == null) {
-//			User student1 = new User("ejames@lec.edu", "testStudent", "student123456", "Y", "Klay", "Thompson", Role.STUDENT);
-//			userRepo.save(student1);
-//			
-//			Student s1 = new Student(student1.getId(), 0, GradeLevel.JUNIOR);
-//			studentRepo.save(s1);
-//		}
-		
-//		studentRepo.deleteAll();
-//		userRepo.deleteAll();
+//			Teacher t = new Teacher(t1.getId(), 0);
+//			teacherRepo.save(t);
 		
 		
 		return args -> {

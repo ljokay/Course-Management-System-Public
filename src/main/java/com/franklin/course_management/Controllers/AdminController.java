@@ -42,12 +42,12 @@ public class AdminController implements ErrorController {
 	@Autowired
 	CourseRepository courseRepo;
 
-    @GetMapping("/courses")
+    @GetMapping("/admincourses")
     public String courses(Model model,
     		 HttpServletRequest request) {
     	
     	User u = (User) request.getSession().getAttribute("user");
-    	
+    	    	
     	List<Course> c = courseRepo.findAll();
     	
     	Map<Long, User> teacherMap = new HashMap<>();
@@ -60,6 +60,8 @@ public class AdminController implements ErrorController {
                 teacherMap.put(course.getTeacherId(), teacher);
             }
         }
+    	
+    	String test = u.getRole().toString();
     	
     	
     	model.addAttribute("role", u.getRole().toString());
@@ -76,8 +78,8 @@ public class AdminController implements ErrorController {
 		
 		User u = (User) request.getSession().getAttribute("user");
 		
-		if (u.getRole() != Role.ADMIN) {
-			return "welcome";
+		if (!u.getRole().equals(Role.ADMIN)) {
+			return "redirect:/welcome";
 		}
 		
     	//get all teachers
@@ -157,7 +159,7 @@ public class AdminController implements ErrorController {
     	
     	model.addAttribute("role", u.getRole().toString());
     	
-    	return "redirect:/courses";
+    	return "redirect:/admincourses";
     	
     }
     

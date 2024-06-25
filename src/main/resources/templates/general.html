@@ -13,13 +13,6 @@
             <h2 id="subtitle" class="dark-back white inline-block rounded">Gradebook</h2>
         </div>
     </div>
-    <div th:fragment="generalNavBar">
-        <ul id="nav-bar" class="dark-back no-margin no-padding">
-            <li>
-                <a href="/index">Home</a>
-            </li>
-        </ul>
-    </div>
     <div th:fragment="teacherNavBar">
         <ul id="nav-bar" class="dark-back no-margin no-padding">
             <li>
@@ -31,21 +24,24 @@
             <li>
                 <a href="/">Students</a>
             </li>
+            <li>
+                <a href="/signout">Sign Out</a>
+            </li>
         </ul>
     </div>
     <div th:fragment="studentNavBar">
         <ul id="nav-bar" class="dark-back no-margin no-padding">
             <li>
-                <a href="/index">Home</a>
+                <a href="/welcome">Home</a>
             </li>
             <li>
-                <a href="/">Edit Schedule</a>
-            </li>
-            <li>
-                <a href="/">Current Courses</a>
+                <a href="/studentcourses">Courses</a>
             </li>
             <li>
                 <a href="/">Grades</a>
+            </li>
+            <li>
+                <a href="/signout">Sign Out</a>
             </li>
         </ul>
     </div>
@@ -58,7 +54,10 @@
                 <a href="/createCourse">Create Course</a>
             </li>
             <li>
-                <a href="/courses">Courses</a>
+                <a href="/admincourses">Courses</a>
+            </li>
+            <li>
+                <a href="/signout">Sign Out</a>
             </li>
         </ul>
     </div>
