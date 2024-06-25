@@ -14,6 +14,7 @@
 
 <body>
     <body>
+    <div th:replace="~{toast.html}"></div>
     <div th:replace="general.html :: header"></div>
     <div th:if="${role} == 'STUDENT'">
     	<div th:replace="general.html :: studentNavBar"></div>

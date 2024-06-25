@@ -98,11 +98,6 @@ td a:hover {
     margin: 0 auto;
 }
 
-.error-text {
-    font-weight: bold;
-    font-size: 16px;
-}
-
 .table-dark-custom {
            background-color: #343a40;
            color: #ffffff;

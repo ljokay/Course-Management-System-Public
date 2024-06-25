@@ -111,6 +111,7 @@ public class StudentController implements ErrorController {
 	            credits += c.getCredits();
 	            student.setCredits(credits);
 	            studentRepo.save(student);
+	            redirectAttributes.addFlashAttribute("toastMessage", "Successfully registered for " + c.getName());
 	            return "redirect:/studentcourses";
 			}
         } else {
