@@ -79,6 +79,20 @@ public class BaseController implements ErrorController {
             @RequestParam(value = "role") String role,
             @RequestParam(value = "grade", required = false) String grade){
     	
+		//Error Handling 
+		//Username
+		User userTest = userRepo.findByUsername(username.trim());
+		if (userTest != null) {
+			model.addAttribute("error", "This username is already in use.");
+			return "signup";
+		}
+		//Email
+		userTest = userRepo.findByEmail(email.trim());
+		if (userTest != null) {
+			model.addAttribute("error", "This email has already been registered");
+			return "signup";
+		}
+
     	Role r = null;
     	User user = null;
     	
