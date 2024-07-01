@@ -111,6 +111,7 @@ public class AdminController implements ErrorController {
             @RequestParam(value = "courseName") String courseName,
             @RequestParam(value = "description") String description,
             @RequestParam(value = "credits") String credits,
+            @RequestParam(value = "seats") String seats,
             @RequestParam(value = "startDate") String startDate,
             @RequestParam(value = "endDate") String endDate,
             @RequestParam(value = "teacher") long teacher,
@@ -143,7 +144,7 @@ public class AdminController implements ErrorController {
         Date javaDate = java.sql.Date.valueOf(startDate);
         Date javaDate2 = java.sql.Date.valueOf(endDate);
         
-    	Course newCourse = new Course(t.getId(), description, courseName, Integer.parseInt(credits), gl, javaDate, javaDate2);
+    	Course newCourse = new Course(t.getId(), description, courseName, Integer.parseInt(seats), Integer.parseInt(credits), gl, javaDate, javaDate2);
     	
     	courseRepo.save(newCourse);
     	

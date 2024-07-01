@@ -55,10 +55,11 @@ public class Course {
 		
 	}
 	
-	public Course (long teacherId, String description, String name, int credits, GradeLevel grade, Date startDate, Date end_date) {
+	public Course (long teacherId, String description, String name, int seats, int credits, GradeLevel grade, Date startDate, Date end_date) {
 		this.teacherId = teacherId;
 		this.description = description;
 		this.name = name;
+		this.seats = seats;
 		this.credits = credits;
 		this.grade = grade;
 		this.startDate = startDate;
@@ -113,6 +114,32 @@ public class Course {
 	public void setGrade(GradeLevel grade) {
 		this.grade = grade;
 	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEnd_date() {
+		return end_date;
+	}
+
+	public void setEnd_date(Date end_date) {
+		this.end_date = end_date;
+	}
+
+	public int getSeats() {
+		return seats;
+	}
+
+	public void setSeats(int seats) {
+		this.seats = seats;
+	}
+	
+	
 
 	
 	

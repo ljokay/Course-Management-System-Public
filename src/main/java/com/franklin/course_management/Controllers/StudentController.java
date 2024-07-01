@@ -104,13 +104,15 @@ public class StudentController implements ErrorController {
 		
 		if (c != null) {
 			if (c.getCredits() + student.getCredits() <= 16
-					&& c.getGrade().equals(student.getGrade())) {
+					&& c.getGrade().equals(student.getGrade()) && c.getSeats() > 1) {
 	            s = new StudentCourses(student.getId(), courseId);
 	            studentCoursesRepo.save(s);
 	            int credits = student.getCredits();
 	            credits += c.getCredits();
 	            student.setCredits(credits);
 	            studentRepo.save(student);
+	            int seats = c.getSeats();
+	            c.setSeats(seats - 1);
 	            redirectAttributes.addFlashAttribute("toastMessage", "Successfully registered for " + c.getName());
 	            return "redirect:/studentcourses";
 			}
