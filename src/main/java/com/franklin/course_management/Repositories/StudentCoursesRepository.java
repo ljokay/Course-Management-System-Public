@@ -11,4 +11,6 @@ public interface StudentCoursesRepository extends CrudRepository<StudentCourses,
     StudentCourses findById(long id);
     
     List<StudentCourses> findByStudentId(long studentId);
+    
+    List<StudentCourses> findByCourseId(long courseId);
  }

@@ -49,6 +49,7 @@ public class TeacherController implements ErrorController {
     	User u = (User) request.getSession().getAttribute("user");
     	    	
     	List<Course> c = courseRepo.findAll();
+    	List<Course> teacherCourses = new ArrayList<>();
     	
     	Map<Long, User> teacherMap = new HashMap<>();
     	
@@ -59,13 +60,16 @@ public class TeacherController implements ErrorController {
             if (teacher != null) {
                 teacherMap.put(course.getTeacherId(), teacher);
             }
+            if (t.getUserId() == u.getId()) {
+            	teacherCourses.add(course);
+            }
         }
     	
     	String test = u.getRole().toString();
     	
     	
     	model.addAttribute("role", u.getRole().toString());
-        model.addAttribute("courses", c);
+        model.addAttribute("courses", teacherCourses);
         model.addAttribute("teacherMap", teacherMap);
     	
         return "courses";

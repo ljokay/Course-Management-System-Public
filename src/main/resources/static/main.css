@@ -107,3 +107,10 @@ td a:hover {
 .table-dark-custom td {
     border-color: #454d55;
 }
+
+.error-text,
+body .error-text {
+    color: red !important;
+    font-weight: bold;
+    font-size: 22px;
+}

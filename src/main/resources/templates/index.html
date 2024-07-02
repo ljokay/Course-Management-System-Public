@@ -30,7 +30,7 @@
                  <input class="form-control" type="password" th:name="password" required />
              </div>
              <div th:if="${error != null}">
-        		<p class="error-text"><span th:text="${error}"></span></p>
+        		<p class="error-text" th:text="${error}"></p>
         	 </div>
              <input type="submit" value="Log In" class="btn btn-primary" /><br><br>
              <a href="forgotpassword">Forgot Password?</a><br><br><br><br>

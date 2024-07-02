@@ -26,7 +26,7 @@ public class Course {
 	public String description;
 	
 	@NotEmpty
-	@Column(name = "name")
+	@Column(name = "name", unique = true)
 	public String name;
 	
 	@NotEmpty

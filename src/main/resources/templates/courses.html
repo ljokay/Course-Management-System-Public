@@ -79,18 +79,20 @@
 							<td th:text="${#dates.format(course.end_date, 'MM-dd-yyyy')}"></td>
 							<td th:text="${teacherMap[course.teacherId].firstName + ' ' + teacherMap[course.teacherId].lastName}"></td>
 							<td th:text="${course.grade}"></td>
-							<td><button type="submit" class="btn btn-primary">Unenroll</button></td>
+							<td>
+								<form class="col-lg-4 offset-lg-4"th:action="@{/unenroll}" method="post">
+									<button type="submit" class="btn btn-primary">Unenroll</button>
+									<input type="hidden" name="courseId" th:value="${course.id}"/>
+								</form>
+							</td>
 							<td><button type="submit" class="btn btn-primary">Show Assignments</button></td>
 					</tbody>
 				</table>
 			</div>
     	</div>
     </div>
-    <div th:if="${role} == 'TEACHER'" th:action="@{/teachercourses}">
+    <div th:if="${role} == 'TEACHER'">
     	<div th:replace="general.html :: teacherNavBar"></div>
-	    	<form class="col-lg-4 offset-lg-4" action="#" th:action="@{/createCourse}" method="get">
-	    		<input type="submit" value="Submit" class="btn btn-primary"/>
-	    	</form>
 		    <div class="center">
 				<h1>Courses</h1>
 	        <table class="table table-dark table-striped table-dark-custom">
@@ -150,8 +152,18 @@
 	                    <td th:text="${#dates.format(course.end_date, 'MM-dd-yyyy')}"></td>
 	                    <td th:text="${teacherMap[course.teacherId].firstName + ' ' + teacherMap[course.teacherId].lastName}"></td>
 	                    <td th:text="${course.grade}"></td>
-	                    <td><button type="button" class="btn btn-warning">Edit</button></td>
-	                    <td><button type="button" class="btn btn-danger">Delete</button></td>
+	                    <td>
+	                    	<form class="col-lg-4 offset-lg-4"th:action="@{/editcourse}" method="get">
+	                    		<button type="submit" class="btn btn-warning">Edit</button>
+	                    		<input type="hidden" name="courseId" th:value="${course.id}"/>
+	                    	</form>
+	                    </td>
+	                    <td>
+	                    	<form class="col-lg-4 offset-lg-4"th:action="@{/deletecourse}" method="post">
+	                    		<button type="submit" class="btn btn-danger">Delete</button>
+	                    		<input type="hidden" name="courseId" th:value="${course.id}"/>
+	                    	</form>
+	                    </td>
 	                </tr>
 	            </tbody>
 	        </table>

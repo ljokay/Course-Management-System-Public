@@ -121,4 +121,39 @@ public class StudentController implements ErrorController {
         }
 		return "redirect:/studentcourses";
 	}
+	
+	@PostMapping("/unenroll")
+    public String unenrollCourse(Model model,
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes,
+            @RequestParam(value = "courseId") Long courseId) {
+		
+		User u = (User) request.getSession().getAttribute("user");
+		
+		Student student = studentRepo.findByUserId(u.getId());
+		
+		Course c = courseRepo.findById(courseId.longValue());
+		
+		int credits = c.getCredits();
+		
+		int studentCredits = student.getCredits();
+		
+		int seats = c.getSeats();
+		
+		if (c != null) {
+			List<StudentCourses> sC = studentCoursesRepo.findByStudentId(student.getId());
+			for (StudentCourses c1 : sC) {
+				if (c1.getStudentId() == student.getId()) {
+					studentCoursesRepo.deleteById(c1.getId());
+					c.setSeats(seats + 1);
+					courseRepo.save(c);
+					student.setCredits(studentCredits - credits);
+					studentRepo.save(student);
+					
+				}
+			}
+		}
+		
+		return "redirect:/studentcourses";
+	}
 }
