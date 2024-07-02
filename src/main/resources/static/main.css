@@ -114,3 +114,10 @@ body .error-text {
     font-weight: bold;
     font-size: 22px;
 }
+
+.signup {
+	font-size: 24px; 
+	font-weight: bold; 
+	background: yellow; 
+	color: black;
+}

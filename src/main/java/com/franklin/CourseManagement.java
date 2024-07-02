@@ -14,6 +14,7 @@ import com.franklin.course_management.Entities.Teacher;
 import com.franklin.course_management.Entities.User;
 import com.franklin.course_management.Entities.User.Role;
 import com.franklin.course_management.GradeLevelEnum.GradeLevel;
+import com.franklin.course_management.Repositories.AdminRepository;
 import com.franklin.course_management.Repositories.CourseRepository;
 import com.franklin.course_management.Repositories.StudentRepository;
 import com.franklin.course_management.Repositories.TeacherRepository;
@@ -31,6 +32,9 @@ public class CourseManagement {
 	@Autowired
 	private CourseRepository courseRepo;
 	
+	@Autowired
+	private AdminRepository adminRepo;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(CourseManagement.class, args);
 	}
@@ -43,6 +47,12 @@ public class CourseManagement {
 //			
 //			Teacher t = new Teacher(t1.getId(), 0);
 //			teacherRepo.save(t);
+		
+		long a = 1702;
+		long b = 152;
+		
+		adminRepo.deleteById(b);
+		userRepo.deleteById(a);
 		
 		return args -> {
             String[] beanNames = ctx.getBeanDefinitionNames();

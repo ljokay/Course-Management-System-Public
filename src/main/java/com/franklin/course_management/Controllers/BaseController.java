@@ -142,6 +142,8 @@ public class BaseController implements ErrorController {
     	
     	emailSenderService.sendEmail(user.getEmail(), subject, body);
     	
+    	model.addAttribute("signup", "Check your email for verification");
+    	
     	
         return "/index";
     }

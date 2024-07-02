@@ -32,6 +32,9 @@
              <div th:if="${error != null}">
         		<p class="error-text" th:text="${error}"></p>
         	 </div>
+        	 <div th:if="${signup != null}">
+        		<p class="signup" th:text="${signup}"></p>
+        	 </div>
              <input type="submit" value="Log In" class="btn btn-primary" /><br><br>
              <a href="forgotpassword">Forgot Password?</a><br><br><br><br>
              <h4 class="">Don't have an account?</h4><br>
