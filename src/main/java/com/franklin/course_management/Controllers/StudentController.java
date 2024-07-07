@@ -157,3 +157,4 @@ public class StudentController implements ErrorController {
 		return "redirect:/studentcourses";
 	}
 }
+
