@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,9 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class TeacherController implements ErrorController {
 	
+	@Autowired
+	AssignmentRepository assignmentRepo;
+
 	@Autowired
 	UserRepository userRepo;
 	
@@ -75,5 +79,31 @@ public class TeacherController implements ErrorController {
         return "courses";
     }
     
-    
+    @PostMapping("/createAssignment")
+	public String createAssignment(Model model,
+		HttpServletRequest request,
+		RedirectAttributes resdiRedirectAttributes,
+		@RequestParam("courseId") long courseId,
+        @RequestParam("assignmentName") String name,
+        @RequestParam("description") String description,
+    	@RequestParam("endDate") Date dueDate,
+        @RequestParam("pointsEarned") int pointsEarned,
+        @RequestParam("totalPoints") int totalPoints) {
+		
+		Assignment assignment = new Assignment(courseId, name, description, dueDate, pointsEarned, totalPoints);
+		assignment = assignmentRepo.save(assignment);
+		
+		//Unsure if this receives every student in general, or if only students in course.
+		Iterable<Student> students = studentRepo.findAll();
+
+		for (Student student : students) {
+
+    		//Needs implementation
+           
+        }
+
+		
+
+		return "redirect:/createAssignment";
+	}
 }
