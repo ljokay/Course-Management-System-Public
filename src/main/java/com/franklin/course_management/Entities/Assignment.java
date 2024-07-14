@@ -20,6 +20,10 @@ public class Assignment {
     public long courseId;
     
     @NotEmpty
+    @Column(name = "student_id")
+    public long studentId;
+    
+    @NotEmpty
 	@Column(name = "description")
 	public String description;
 	
@@ -39,18 +43,25 @@ public class Assignment {
 	@Column(name="total_points")
 	public int totalPoints;
 	
+	@NotEmpty
+	@Column(name = "is_submitted")
+	public String isSubmitted;
+	
+	
 	
 	public Assignment () {
 		
 	}
 	
-	public Assignment (long courseId, String description, String name, Date dueDate, int pointsEarned, int totalPoints) {
+	public Assignment (long courseId, long studentId, String description, String name, Date dueDate, int pointsEarned, int totalPoints, String isSubmitted) {
 		this.courseId = courseId;
+		this.studentId = studentId;
 		this.description = description;
 		this.name = name;
 		this.dueDate = dueDate;
 		this.pointsEarned = pointsEarned;
 		this.totalPoints = totalPoints;
+		this.isSubmitted = isSubmitted;
 	}
 
 	public long getId() {
@@ -67,6 +78,14 @@ public class Assignment {
 
 	public void setCourseId(long courseId) {
 		this.courseId = courseId;
+	}
+
+	public long getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(long studentId) {
+		this.studentId = studentId;
 	}
 
 	public String getDescription() {
@@ -109,7 +128,13 @@ public class Assignment {
 		this.totalPoints = totalPoints;
 	}
 
-	
+	public String getIsSubmitted() {
+		return isSubmitted;
+	}
+
+	public void setIsSubmitted(String isSubmitted) {
+		this.isSubmitted = isSubmitted;
+	}
 
 	
 	

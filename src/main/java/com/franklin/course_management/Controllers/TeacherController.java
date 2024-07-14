@@ -45,6 +45,9 @@ public class TeacherController implements ErrorController {
 	
 	@Autowired
 	CourseRepository courseRepo;
+	
+	@Autowired
+	StudentCoursesRepository studentCourseRepo;
 
     @GetMapping("/teachercourses")
     public String courses(Model model,
@@ -79,31 +82,66 @@ public class TeacherController implements ErrorController {
         return "courses";
     }
     
+    @GetMapping("/createAssignment")
+    public String createAssignment(Model model,
+    		 HttpServletRequest request,
+    		 @RequestParam("courseId") Long courseId) {
+    	
+    	Course c = courseRepo.findById(courseId.longValue());
+    	
+    	model.addAttribute("course", c);
+    	
+    	return "createAssignment";
+    }
+    
     @PostMapping("/createAssignment")
 	public String createAssignment(Model model,
 		HttpServletRequest request,
-		RedirectAttributes resdiRedirectAttributes,
-		@RequestParam("courseId") long courseId,
+		RedirectAttributes redirectAttributes,
+		@RequestParam("courseId") Long courseId,
         @RequestParam("assignmentName") String name,
         @RequestParam("description") String description,
-    	@RequestParam("endDate") Date dueDate,
-        @RequestParam("pointsEarned") int pointsEarned,
+    	@RequestParam("endDate") String dueDate,
         @RequestParam("totalPoints") int totalPoints) {
 		
-		Assignment assignment = new Assignment(courseId, name, description, dueDate, pointsEarned, totalPoints);
-		assignment = assignmentRepo.save(assignment);
-		
-		//Unsure if this receives every student in general, or if only students in course.
-		Iterable<Student> students = studentRepo.findAll();
+    	Date due_date = java.sql.Date.valueOf(dueDate);
+    	
+		List<StudentCourses> students = studentCourseRepo.findByCourseId(courseId);
 
-		for (Student student : students) {
-
-    		//Needs implementation
-           
+		for (StudentCourses student : students) {
+			Assignment assignment = new Assignment(courseId.longValue(), student.getStudentId(), name, description, due_date, 0, totalPoints, "N");
+			assignmentRepo.save(assignment);
         }
 
+		List<Assignment> studentAssignment = assignmentRepo.findByCourseId(courseId.longValue());
 		
+		redirectAttributes.addAttribute("assignments", studentAssignment);
+		
+		redirectAttributes.addAttribute("courseId", courseId);
 
-		return "redirect:/createAssignment";
+		return "redirect:/courseAssignments";
 	}
+    
+    @GetMapping("/courseAssignments")
+    public String courseAssignment(Model model,
+    		 HttpServletRequest request,
+    		 @RequestParam("courseId") Long courseId) {
+    	
+    	List<Assignment> studentAssignment = assignmentRepo.findByCourseId(courseId.longValue());
+    	
+    	Map<Long, User> studentMap = new HashMap<>();
+    	
+    	for (Assignment a : studentAssignment) {
+    		Student s = studentRepo.findById(a.getStudentId());
+            User student = userRepo.findById(s.getUserId());
+            if (student != null) {
+                studentMap.put(a.getStudentId(), student);
+            }
+        }
+    	
+    	model.addAttribute("assignments", studentAssignment);
+    	model.addAttribute("studentMap", studentMap);
+    	
+    	return "courseAssignments";
+    }
 }

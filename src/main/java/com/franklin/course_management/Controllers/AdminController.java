@@ -185,6 +185,14 @@ public class AdminController implements ErrorController {
     	
 		Course c = courseRepo.findById(courseId.longValue());
 		
+		Teacher t = teacherRepo.findById(c.getTeacherId());
+		
+		int credits = t.getCredits();
+		
+		t.setCredits(credits - c.getCredits());
+		
+		teacherRepo.save(t);
+		
 		List<StudentCourses> sC = studentCoursesRepo.findByCourseId(c.getId());
 		
 		for (StudentCourses sc : sC) {

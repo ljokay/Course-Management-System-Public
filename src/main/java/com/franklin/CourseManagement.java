@@ -16,6 +16,7 @@ import com.franklin.course_management.Entities.User.Role;
 import com.franklin.course_management.GradeLevelEnum.GradeLevel;
 import com.franklin.course_management.Repositories.AdminRepository;
 import com.franklin.course_management.Repositories.CourseRepository;
+import com.franklin.course_management.Repositories.StudentCoursesRepository;
 import com.franklin.course_management.Repositories.StudentRepository;
 import com.franklin.course_management.Repositories.TeacherRepository;
 import com.franklin.course_management.Repositories.UserRepository;
@@ -33,7 +34,13 @@ public class CourseManagement {
 	private CourseRepository courseRepo;
 	
 	@Autowired
+	private StudentRepository studentRepo;
+	
+	@Autowired
 	private AdminRepository adminRepo;
+	
+	@Autowired
+	private StudentCoursesRepository stuCourRepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CourseManagement.class, args);
@@ -42,17 +49,24 @@ public class CourseManagement {
 	@Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		
-//			User t1 = new User("testTeacher2@gmail.com", "testTeacher2", "teacher123456", "Y", "Bill", "Russell", Role.TEACHER);
-//			userRepo.save(t1);
-//			
-//			Teacher t = new Teacher(t1.getId(), 0);
-//			teacherRepo.save(t);
+//		User u1 = new User("test1@gmail.com", "testStudent1", "test12345", "Y", "Test", "Student", Role.STUDENT);
+//		userRepo.save(u1);
+//		u1 = userRepo.findByUsername("testStudent1");
+//		Student s1 = new Student(u1.getId(), 0, GradeLevel.SENIOR);
+//		studentRepo.save(s1);
+//		
+//		User u2 = new User("test12@gmail.com", "testStudent2", "test12345", "Y", "Test", "Student", Role.TEACHER);
+//		userRepo.save(u2);
+//		User u2 = userRepo.findByEmail("test12@gmail.com");
+//		u2.setUsername("testTeacher1");
+//		userRepo.save(u2);
+//		Teacher t = new Teacher(u2.getId(), 0);
+//		teacherRepo.save(t);
+		Long id = (long) 2202;
+		adminRepo.deleteAll();
+		userRepo.deleteById(id);
 		
-		long a = 1702;
-		long b = 152;
 		
-		adminRepo.deleteById(b);
-		userRepo.deleteById(a);
 		
 		return args -> {
             String[] beanNames = ctx.getBeanDefinitionNames();

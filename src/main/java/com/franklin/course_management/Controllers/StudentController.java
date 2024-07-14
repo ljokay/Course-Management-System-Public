@@ -113,6 +113,7 @@ public class StudentController implements ErrorController {
 	            studentRepo.save(student);
 	            int seats = c.getSeats();
 	            c.setSeats(seats - 1);
+	            courseRepo.save(c);
 	            redirectAttributes.addFlashAttribute("toastMessage", "Successfully registered for " + c.getName());
 	            return "redirect:/studentcourses";
 			}
@@ -143,7 +144,7 @@ public class StudentController implements ErrorController {
 		if (c != null) {
 			List<StudentCourses> sC = studentCoursesRepo.findByStudentId(student.getId());
 			for (StudentCourses c1 : sC) {
-				if (c1.getStudentId() == student.getId()) {
+				if (c1.getStudentId() == student.getId() && c1.getCourseId() == courseId) {
 					studentCoursesRepo.deleteById(c1.getId());
 					c.setSeats(seats + 1);
 					courseRepo.save(c);
