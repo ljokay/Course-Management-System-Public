@@ -42,7 +42,9 @@ public class StudentController implements ErrorController {
 	
 	@Autowired
 	UserRepository userRepo;
-	
+
+	@Autowired
+	AssignmentRepository assignmentRepo;
 	
 	@GetMapping("/studentcourses")
 	public String courses(Model model,
@@ -156,6 +158,18 @@ public class StudentController implements ErrorController {
 		}
 		
 		return "redirect:/studentcourses";
+	}
+
+	@PostMapping("/submit")
+	public String submitAssignment(Long assignmentId) {
+		Assignment assignment = assignmentRepo.findById(assignmentId).orElse(null);
+
+		return "Placeholder";
+		/*
+		Unsure what to implement here to make the assignment be considered submitted. 
+		Should there be a value in the Assignment Entity such as isSubmitted to
+		indicate whether an assignment is submitted?S
+		*/
 	}
 }
 
