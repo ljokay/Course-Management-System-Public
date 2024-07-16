@@ -144,4 +144,29 @@ public class TeacherController implements ErrorController {
     	
     	return "courseAssignments";
     }
+    
+    @GetMapping("/viewStudents")
+    public String viewStudents(Model model,
+    		 HttpServletRequest request,
+    		 @RequestParam("courseId") Long courseId) {
+    	
+    	List<StudentCourses> studentCourses = studentCourseRepo.findByCourseId(courseId.longValue());
+    	
+    	List<User> students = new ArrayList<>();
+    	Map<Long, Student> studentMap = new HashMap<>();
+    	
+    	for (StudentCourses sc : studentCourses) {
+    		Student s = studentRepo.findById(sc.getStudentId());
+            User student = userRepo.findById(s.getUserId());
+            if (student != null) {
+                students.add(student);
+                studentMap.put(student.getId(), s);
+            }
+        }
+    	
+    	model.addAttribute("students", students);
+    	model.addAttribute("studentMap", studentMap);
+    	
+    	return "viewStudents";
+    }
 }

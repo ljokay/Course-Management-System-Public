@@ -10,5 +10,7 @@ public interface AssignmentRepository extends CrudRepository<Assignment, Long> {
 
     Assignment findById(long id);
     
+    List<Assignment> findByStudentId(long studentId);
+    
     List<Assignment> findByCourseId(long courseId);
  }
