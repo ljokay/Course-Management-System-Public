@@ -201,6 +201,30 @@ public class StudentController implements ErrorController {
 		
 		return "redirect:/studentcourses";
 	}
+	
+	@PostMapping("/assignments")
+    public String assignment(Model model,
+    		 HttpServletRequest request,
+    		 @RequestParam("courseId") Long courseId) {
+    	
+		User u = (User) request.getSession().getAttribute("user");
+		
+		Student student = studentRepo.findByUserId(u.getId());
+		
+    	List<Assignment> assignment = assignmentRepo.findByCourseId(courseId);
+    	
+    	List<Assignment> studentAssignment = new ArrayList<>();
+    	
+    	for (Assignment a : assignment) {
+    		if (a.getStudentId() == student.getId()) {
+    			studentAssignment.add(a);
+    		}
+        }
+    	
+    	model.addAttribute("assignments", studentAssignment);
+    	
+    	return "assignments";
+    }
 
 	@PostMapping("/submit")
 	public String submitAssignment(Long assignmentId) {

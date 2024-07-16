@@ -14,12 +14,10 @@
 
 <body>
     <body>
-    <div th:replace="~{toast.html}"></div>
     <div th:replace="general.html :: header"></div>
-    <div th:if="${role} == 'STUDENT'">
-    	<div th:replace="general.html :: studentNavBar"></div>
-		    <div class="center"> 
-				<div>
+    <div th:replace="general.html :: studentNavBar"></div>
+	    <div class="center"> 
+			<div>
 				<h1>Assignments</h1>
 				<table class ="table table-dark table-striped table-dark-custom">
 					<thead>
@@ -29,16 +27,16 @@
 	                    	<th>Due Date</th>
 	                    	<th>Points Earned</th>
 	                    	<th>Total Points</th>
-                            <th>Submission</th>
+                            <th>Submit</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="assignment : ${courses}">
+						<tr th:each="assignment : ${assignments}">
 							<td th:text="${assignment.name}"></td>
 							<td th:text="${assignment.description}"></td>
-							<td th:text="${#dates.format(assignmnet.due_date, 'MM-dd-yyyy')}"></td>
-							<td th:text="${assignment.points_earned}"></td>
-							<td th:text="${assignment.total_points}"></td>
+							<td th:text="${#dates.format(assignment.dueDate, 'MM-dd-yyyy')}"></td>
+							<td th:text="${assignment.pointsEarned}"></td>
+							<td th:text="${assignment.totalPoints}"></td>
 							<td>
 								<form class="col-lg-4 offset-lg-4"th:action="@{/submit}" method="post">
 									<button type="submit" class="btn btn-primary">Submit Assignment</button>
@@ -49,7 +47,6 @@
 					</tbody>
 				</table>
 			</div>
-        </div>
-    </div>
+       	</div>
 </body>
 </html>

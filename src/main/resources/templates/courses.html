@@ -86,7 +86,12 @@
 									<input type="hidden" name="courseId" th:value="${course.id}"/>
 								</form>
 							</td>
-							<td><button type="submit" class="btn btn-primary">Show Assignments</button></td>
+							<td>
+								<form class="col-lg-4 offset-lg-4"th:action="@{/assignments}" method="post">
+									<button type="submit" class="btn btn-primary">Show Assignments</button>
+									<input type="hidden" name="courseId" th:value="${course.id}"/>
+								</form>
+							</td>
 					</tbody>
 				</table>
 			</div>
