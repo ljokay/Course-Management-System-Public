@@ -43,6 +43,9 @@ public class StudentController implements ErrorController {
 	@Autowired
 	UserRepository userRepo;
 	
+	@Autowired
+	AssignmentRepository assignmentRepo;
+	
 	
 	@GetMapping("/studentcourses")
 	public String courses(Model model,
@@ -60,6 +63,20 @@ public class StudentController implements ErrorController {
 		
 		List<StudentCourses> c = studentCoursesRepo.findByStudentId(s.getId());
 		
+		List<Assignment> assignment = assignmentRepo.findByStudentId(s.getId());
+		
+		Map<Long, String> grades = new HashMap<>();
+		
+		double totalPoints = 0;
+		
+		double earnedPoints = 0;
+		
+		double percentage = 0;
+		
+		
+		String grade = null;
+		
+		
 		List<Course> enrolledCourses = new ArrayList<>();
 		List<Course> availableCourses = new ArrayList<>(courses);
 		
@@ -68,6 +85,32 @@ public class StudentController implements ErrorController {
 			enrolledCourses.add(courseRepo.findById(course.getId()));
 			
 			availableCourses.remove(course);
+			
+			if (assignment.size() > 0 && !assignment.isEmpty()) {
+				for (Assignment a : assignment) {
+					if (a.getCourseId() == enrolled.getCourseId()) {
+						totalPoints += a.getTotalPoints();
+						earnedPoints += a.getPointsEarned(); 
+					}
+				}
+				percentage = (earnedPoints / totalPoints) * 100;
+				
+				if (percentage >= 90) {
+					grade = "A";
+				} else if (percentage >= 80 && percentage < 90) {
+					grade = "B";
+				} else if (percentage >= 70 && percentage < 80) {
+					grade = "C";
+				} else if (percentage >= 60 && percentage < 70) {
+					grade = "D";
+				} else if (percentage < 60) {
+					grade = "F";
+				} else {
+					grade = "N/A";
+				}
+			}
+			
+			grades.put(enrolled.courseId, grade);
 		}
 		
 		Map<Long, User> teacherMap = new HashMap<>();
@@ -84,6 +127,7 @@ public class StudentController implements ErrorController {
 		model.addAttribute("courses", availableCourses);
 		model.addAttribute("enrolledCourses", enrolledCourses);
 		model.addAttribute("teacherMap", teacherMap);
+		model.addAttribute("grades", grades);
     	
         return "courses";
     }

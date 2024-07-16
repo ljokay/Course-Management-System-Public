@@ -64,6 +64,7 @@
 	                    	<th>Start Date</th>
 	                    	<th>End Date</th>
 	                    	<th>Teacher</th>
+	                    	<th>Grade</th>
 	                    	<th>Grade Level</th>
 	                    	<th colspan="2">Actions</th>
 						</tr>
@@ -77,6 +78,7 @@
 							<td th:text="${#dates.format(course.startDate, 'MM-dd-yyyy')}"></td>
 							<td th:text="${#dates.format(course.end_date, 'MM-dd-yyyy')}"></td>
 							<td th:text="${teacherMap[course.teacherId].firstName + ' ' + teacherMap[course.teacherId].lastName}"></td>
+							<td th:text="${grades[course.Id]}"></td>
 							<td th:text="${course.grade}"></td>
 							<td>
 								<form class="col-lg-4 offset-lg-4"th:action="@{/unenroll}" method="post">
@@ -116,7 +118,12 @@
 	                    <td th:text="${#dates.format(course.end_date, 'MM-dd-yyyy')}"></td>
 	                    <td th:text="${teacherMap[course.teacherId].firstName + ' ' + teacherMap[course.teacherId].lastName}"></td>
 	                    <td th:text="${course.grade}"></td>
-	                    <td><button type="button" class="btn btn-primary">View Students</button></td>
+	                    <td>
+	                    	<form class="col-lg-4 offset-lg-4"th:action="@{/viewStudents}" method="get">
+	                    		<button type="submit" class="btn btn-primary">View Students</button>
+	                    		<input type="hidden" name="courseId" th:value="${course.id}"/>
+	                    	</form>
+	                    </td>
 	                    <td>
 							<form class="col-lg-4 offset-lg-4"th:action="@{/createAssignment}" method="get">
 								<button type="submit" class="btn btn-primary">Create Assignment</button>
