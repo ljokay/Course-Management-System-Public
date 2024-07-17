@@ -229,6 +229,10 @@ public class StudentController implements ErrorController {
 	@PostMapping("/submit")
 	public String submitAssignment(Long assignmentId) {
 		Assignment assignment = assignmentRepo.findById(assignmentId).orElse(null);
+		
+		//check if submitted
+		
+		//if not change to submitted
 
 		return "Placeholder";
 		/*

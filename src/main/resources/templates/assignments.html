@@ -27,6 +27,7 @@
 	                    	<th>Due Date</th>
 	                    	<th>Points Earned</th>
 	                    	<th>Total Points</th>
+	                    	<th>Submitted?</th>
                             <th>Submit</th>
 						</tr>
 					</thead>
@@ -37,9 +38,10 @@
 							<td th:text="${#dates.format(assignment.dueDate, 'MM-dd-yyyy')}"></td>
 							<td th:text="${assignment.pointsEarned}"></td>
 							<td th:text="${assignment.totalPoints}"></td>
+							<td th:text="${assignment.isSubmitted}"></td>
 							<td>
 								<form class="col-lg-4 offset-lg-4"th:action="@{/submit}" method="post">
-									<button type="submit" class="btn btn-primary">Submit Assignment</button>
+									<button type="submit" class="btn btn-primary">Submit</button>
 									<input type="hidden" name="assignmentId" th:value="${assignment.id}" />
 								</form>
 							</td>
