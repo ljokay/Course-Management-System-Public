@@ -235,16 +235,11 @@ public class StudentController implements ErrorController {
 	public String submitAssignment(Long assignmentId) {
 		Assignment assignment = assignmentRepo.findById(assignmentId).orElse(null);
 		
-		//check if submitted
-		
-		//if not change to submitted
-
-		return "Placeholder";
-		/*
-		Unsure what to implement here to make the assignment be considered submitted. 
-		Should there be a value in the Assignment Entity such as isSubmitted to
-		indicate whether an assignment is submitted?S
-		*/
+		if (!assignment.getIsSubmitted().equals("Y")) {
+			assignment.setIsSubmitted("Y");
+			assignmentRepo.save(assignment);
+		}
+		return "submit";
 	}
 }
 
