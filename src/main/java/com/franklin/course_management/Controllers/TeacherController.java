@@ -169,4 +169,15 @@ public class TeacherController implements ErrorController {
     	
     	return "viewStudents";
     }
+
+	@PostMapping("/grade")
+	public String grade(@RequestParam Long assignmentId, @RequestParam int pointsEarned) {
+		Assignment assignment = assignmentRepo.findById(assignmentId).orElse(null);
+		if (assignment.getIsSubmitted().equals("Y")) {
+			assignment.setPointsEarned(pointsEarned);
+			//Potential value in Assignment Entity to tell if assignment is graded?
+			assignmentRepo.save(assignment);
+		}
+		return "grade";
+	}
 }
