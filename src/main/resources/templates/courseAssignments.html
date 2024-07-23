@@ -33,22 +33,22 @@
 			            </thead>
 			            <tbody>
 			                <tr th:each="assignment : ${assignments}">
-			                	<td th:text="${studentMap[assignment.studentId].firstName + ' ' + studentMap[assignment.studentId].lastName}"></td>
-			                    <td th:text="${assignment.name}"></td>
-			                    <td th:text="${assignment.description}"></td>
-			                    <td th:text="${#dates.format(assignment.dueDate, 'MM-dd-yyyy')}"></td>
-			                    <td>
-			                        <input style="width: 100px;background-color: white;color:black" type="text" name="pointsEarned" minlength="3"
-			                        th:disabled="${assignment.isSubmitted != 'Y'}" />
-                    			</td>
-			                    <td th:text="${assignment.totalPoints}"></td>
-			                    <td th:text="${assignment.isSubmitted}"></td>
-			                    <td>
-									<form class="col-lg-4 offset-lg-4"th:action="@{/createAssignment}" method="get">
+			                	<form class="col-lg-4 offset-lg-4"th:action="@{/grade}" method="post">
+				                	<td th:text="${studentMap[assignment.studentId].firstName + ' ' + studentMap[assignment.studentId].lastName}"></td>
+				                    <td th:text="${assignment.name}"></td>
+				                    <td th:text="${assignment.description}"></td>
+				                    <td th:text="${#dates.format(assignment.dueDate, 'MM-dd-yyyy')}"></td>
+				                    <td>
+				                        <input style="width: 100px;background-color: white;color:black" type="text" name="pointsEarned" th:value="${assignment.pointsEarned}"
+				                        minlength="1" th:disabled="${assignment.isSubmitted != 'Y'}" />
+	                    			</td>
+				                    <td th:text="${assignment.totalPoints}"></td>
+				                    <td th:text="${assignment.isSubmitted}"></td>
+				                    <td>
 										<button type="submit" class="btn btn-primary">Grade Assignment</button>
-										<input type="hidden" name="courseId" th:value="${assignment.id}"/>
-									</form>
-								</td>
+										<input type="hidden" th:name="assignmentId" th:value="${assignment.id}"/>
+									</td>
+								</form>
 			                </tr>
 			            </tbody>
 			        </table>

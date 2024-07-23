@@ -109,7 +109,7 @@ public class TeacherController implements ErrorController {
 		List<StudentCourses> students = studentCourseRepo.findByCourseId(courseId);
 
 		for (StudentCourses student : students) {
-			Assignment assignment = new Assignment(courseId.longValue(), student.getStudentId(), name, description, due_date, 0, totalPoints, "N");
+			Assignment assignment = new Assignment(courseId.longValue(), student.getStudentId(), name, description, due_date, null, totalPoints, "N");
 			assignmentRepo.save(assignment);
         }
 
@@ -171,13 +171,29 @@ public class TeacherController implements ErrorController {
     }
 
 	@PostMapping("/grade")
-	public String grade(@RequestParam Long assignmentId, @RequestParam int pointsEarned) {
+	public String grade(Model model, @RequestParam Long assignmentId, @RequestParam int pointsEarned) {
 		Assignment assignment = assignmentRepo.findById(assignmentId).orElse(null);
+		long courseId = assignment.getCourseId();
 		if (assignment.getIsSubmitted().equals("Y")) {
 			assignment.setPointsEarned(pointsEarned);
 			//Potential value in Assignment Entity to tell if assignment is graded?
 			assignmentRepo.save(assignment);
 		}
-		return "grade";
+		
+		List<Assignment> studentAssignment = assignmentRepo.findByCourseId(courseId);
+    	
+    	Map<Long, User> studentMap = new HashMap<>();
+    	
+    	for (Assignment a : studentAssignment) {
+    		Student s = studentRepo.findById(a.getStudentId());
+            User student = userRepo.findById(s.getUserId());
+            if (student != null) {
+                studentMap.put(a.getStudentId(), student);
+            }
+        }
+    	
+    	model.addAttribute("assignments", studentAssignment);
+    	model.addAttribute("studentMap", studentMap);
+		return "courseAssignments";
 	}
 }

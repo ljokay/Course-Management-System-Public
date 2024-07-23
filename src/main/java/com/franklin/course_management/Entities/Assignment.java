@@ -37,7 +37,7 @@ public class Assignment {
 	
 	@NotEmpty
 	@Column(name="points_earned")
-	public int pointsEarned;
+	public Integer pointsEarned;
 	
 	@NotEmpty
 	@Column(name="total_points")
@@ -53,7 +53,7 @@ public class Assignment {
 		
 	}
 	
-	public Assignment (long courseId, long studentId, String description, String name, Date dueDate, int pointsEarned, int totalPoints, String isSubmitted) {
+	public Assignment (long courseId, long studentId, String description, String name, Date dueDate, Integer pointsEarned, int totalPoints, String isSubmitted) {
 		this.courseId = courseId;
 		this.studentId = studentId;
 		this.description = description;
@@ -112,11 +112,11 @@ public class Assignment {
 		this.dueDate = dueDate;
 	}
 
-	public int getPointsEarned() {
+	public Integer getPointsEarned() {
 		return pointsEarned;
 	}
 
-	public void setPointsEarned(int pointsEarned) {
+	public void setPointsEarned(Integer pointsEarned) {
 		this.pointsEarned = pointsEarned;
 	}
 

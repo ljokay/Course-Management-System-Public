@@ -18,36 +18,44 @@
     <div th:replace="general.html :: studentNavBar"></div>
 	    <div class="center"> 
 			<div>
+				<div th:if="${error != null}">
+        			<p><span style="color: red; font-weight: bold; font-size: 30px" th:text="${error}"></span></p>
+       			</div>
 				<h1>Assignments</h1>
-				<table class ="table table-dark table-striped table-dark-custom">
-					<thead>
-						<tr>
-							<th>Assignment Name</th>
-	                    	<th>Description</th>
-	                    	<th>Due Date</th>
-	                    	<th>Points Earned</th>
-	                    	<th>Total Points</th>
-	                    	<th>Submitted?</th>
-                            <th>Submit</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="assignment : ${assignments}">
-							<td th:text="${assignment.name}"></td>
-							<td th:text="${assignment.description}"></td>
-							<td th:text="${#dates.format(assignment.dueDate, 'MM-dd-yyyy')}"></td>
-							<td th:text="${assignment.pointsEarned}"></td>
-							<td th:text="${assignment.totalPoints}"></td>
-							<td th:text="${assignment.isSubmitted}"></td>
-							<td>
-								<form class="col-lg-4 offset-lg-4"th:action="@{/submit}" method="post">
-									<button type="submit" class="btn btn-primary">Submit</button>
-									<input type="hidden" name="assignmentId" th:value="${assignment.id}" />
-								</form>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div th:if="${#lists.isEmpty(assignments)}">
+                	<p style="color: red; font-weight: bold; font-size: 60px">No Assignments!</p>
+            	</div>
+            	<div th:unless="${#lists.isEmpty(assignments)}">
+					<table class ="table table-dark table-striped table-dark-custom">
+						<thead>
+							<tr>
+								<th>Assignment Name</th>
+		                    	<th>Description</th>
+		                    	<th>Due Date</th>
+		                    	<th>Points Earned</th>
+		                    	<th>Total Points</th>
+		                    	<th>Submitted?</th>
+	                            <th>Submit</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="assignment : ${assignments}">
+								<td th:text="${assignment.name}"></td>
+								<td th:text="${assignment.description}"></td>
+								<td th:text="${#dates.format(assignment.dueDate, 'MM-dd-yyyy')}"></td>
+								<td th:text="${assignment.pointsEarned}"></td>
+								<td th:text="${assignment.totalPoints}"></td>
+								<td th:text="${assignment.isSubmitted}"></td>
+								<td>
+									<form class="col-lg-4 offset-lg-4"th:action="@{/submit}" method="post">
+										<button type="submit" class="btn btn-primary">Submit</button>
+										<input type="hidden" name="assignmentId" th:value="${assignment.id}" />
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
        	</div>
 </body>

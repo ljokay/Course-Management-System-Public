@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -74,7 +75,7 @@ public class StudentController implements ErrorController {
 		double percentage = 0;
 		
 		
-		String grade = null;
+		String grade = "No graded assignments";
 		
 		
 		List<Course> enrolledCourses = new ArrayList<>();
@@ -89,8 +90,10 @@ public class StudentController implements ErrorController {
 			if (assignment.size() > 0 && !assignment.isEmpty()) {
 				for (Assignment a : assignment) {
 					if (a.getCourseId() == enrolled.getCourseId()) {
-						totalPoints += a.getTotalPoints();
-						earnedPoints += a.getPointsEarned(); 
+						if (a.getPointsEarned() != null) {
+							totalPoints += a.getTotalPoints();
+							earnedPoints += a.getPointsEarned(); 
+						}
 					}
 				}
 				
@@ -110,12 +113,10 @@ public class StudentController implements ErrorController {
 					} else {
 						grade = "N/A";
 					}
-				} else {
-					grade = "No graded assignments";
 				}
 			}
 			
-			grades.put(enrolled.courseId, grade);
+			grades.put(enrolled.getCourseId(), grade);
 		}
 		
 		Map<Long, User> teacherMap = new HashMap<>();
@@ -151,6 +152,9 @@ public class StudentController implements ErrorController {
 		
 		StudentCourses s = new StudentCourses();
 		
+		Date d = new Date();
+		
+		
 		if (c != null) {
 			if (c.getCredits() + student.getCredits() <= 16
 					&& c.getGrade().equals(student.getGrade()) && c.getSeats() > 1) {
@@ -163,6 +167,14 @@ public class StudentController implements ErrorController {
 	            int seats = c.getSeats();
 	            c.setSeats(seats - 1);
 	            courseRepo.save(c);
+	            List<Assignment> a = assignmentRepo.findByCourseId(courseId);
+	            for (Assignment a1 : a) {
+	            	if (a1.getDueDate().before(d)) {
+		            	Assignment create = new Assignment(courseId.longValue(), student.getId(), a1.getName(), a1.getDescription(), 
+		            			a1.getDueDate(), null, a1.getTotalPoints(), "N");
+		            	assignmentRepo.save(create);
+	            	}
+	            }
 	            redirectAttributes.addFlashAttribute("toastMessage", "Successfully registered for " + c.getName());
 	            return "redirect:/studentcourses";
 			}
@@ -200,6 +212,16 @@ public class StudentController implements ErrorController {
 					student.setCredits(studentCredits - credits);
 					studentRepo.save(student);
 					
+					List<Assignment> assignment = assignmentRepo.findByStudentId(c1.getStudentId());
+					
+					if (!assignment.isEmpty() && assignment.size() > 0) {
+						for (Assignment a : assignment) {
+							if (a.getCourseId() == courseId) {
+								assignmentRepo.delete(a);
+							}
+						}
+					}
+					
 				}
 			}
 		}
@@ -232,14 +254,38 @@ public class StudentController implements ErrorController {
     }
 
 	@PostMapping("/submit")
-	public String submitAssignment(Long assignmentId) {
+	public String submitAssignment(Model model, HttpServletRequest request, Long assignmentId) {
+		
+		User u = (User) request.getSession().getAttribute("user");
+		
 		Assignment assignment = assignmentRepo.findById(assignmentId).orElse(null);
+		
+		Student student = studentRepo.findByUserId(u.getId());
+		
+    	List<Assignment> assignment1 = assignmentRepo.findByCourseId(assignment.getCourseId());
+    	
+    	List<Assignment> studentAssignment = new ArrayList<>();
+    	
+    	for (Assignment a : assignment1) {
+    		if (a.getStudentId() == student.getId()) {
+    			studentAssignment.add(a);
+    		}
+        }
 		
 		if (!assignment.getIsSubmitted().equals("Y")) {
 			assignment.setIsSubmitted("Y");
 			assignmentRepo.save(assignment);
+		} else {
+			
+			model.addAttribute("error", "Assignment already submitted.");
+			model.addAttribute("assignments", studentAssignment);
+			return "assignments";
 		}
-		return "submit";
+		
+    	
+    	model.addAttribute("assignments", studentAssignment);
+    	
+		return "assignments";
 	}
 }
 
