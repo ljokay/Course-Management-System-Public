@@ -44,6 +44,9 @@ public class AdminController implements ErrorController {
 	
 	@Autowired
 	StudentCoursesRepository studentCoursesRepo;
+	
+	@Autowired
+	AssignmentRepository assignmentRepo;
 
     @GetMapping("/admincourses")
     public String courses(Model model,
@@ -198,9 +201,26 @@ public class AdminController implements ErrorController {
 		for (StudentCourses sc : sC) {
 			if (sc.getCourseId() == c.getId()) {
 				studentCoursesRepo.deleteById(sc.getId());
+				
+				Student s = studentRepo.findById(sc.getStudentId());
+				
+				int sCredits = s.getCredits();
+				
+				sCredits = sCredits - c.getCredits();
+				
+				s.setCredits(sCredits);
+				
+				studentRepo.save(s);
+				
 				System.out.println("Deleted from student_courses " + c.getName());
 	    	}	
-    }
+		}
+		
+		List<Assignment> a = assignmentRepo.findByCourseId(courseId.longValue());
+		
+		for (Assignment a1 : a) {
+			assignmentRepo.delete(a1);
+		}
 		
 		courseRepo.deleteById(c.getId());
     	
