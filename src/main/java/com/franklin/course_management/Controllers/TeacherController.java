@@ -176,8 +176,9 @@ public class TeacherController implements ErrorController {
 		long courseId = assignment.getCourseId();
 		if (assignment.getIsSubmitted().equals("Y")) {
 			assignment.setPointsEarned(pointsEarned);
-			//Potential value in Assignment Entity to tell if assignment is graded?
-			assignmentRepo.save(assignment);
+			if(assignment != null) {
+				assignmentRepo.save(assignment);
+			}
 		}
 		
 		List<Assignment> studentAssignment = assignmentRepo.findByCourseId(courseId);
