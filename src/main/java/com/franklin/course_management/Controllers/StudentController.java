@@ -154,7 +154,15 @@ public class StudentController implements ErrorController {
 		
 		Date d = new Date();
 		
-		
+		//Error handling for incorrect grade
+		if (student.getGrade() != c.getGrade()) {
+			model.addAttribute("error", "Student grade does not match course grade");
+    		return "enroll";
+		}
+		//Error handling for too many credits
+		if (student.getCredits() > 16) {
+			model.addAttribute("error", "Enrolled credits exceeds maxiumum allowed credits (16)");
+		}
 		if (c != null) {
 			if (c.getCredits() + student.getCredits() <= 16
 					&& c.getGrade().equals(student.getGrade()) && c.getSeats() > 1) {
