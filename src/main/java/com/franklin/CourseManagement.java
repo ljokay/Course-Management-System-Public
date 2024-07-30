@@ -62,9 +62,9 @@ public class CourseManagement {
 //		userRepo.save(u2);
 //		Teacher t = new Teacher(u2.getId(), 0);
 //		teacherRepo.save(t);
-		Long id = (long) 2202;
-		adminRepo.deleteAll();
-		userRepo.deleteById(id);
+//		Long id = (long) 2252;
+//		adminRepo.deleteAll();
+//		userRepo.deleteById(id);
 		
 		
 		

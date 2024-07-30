@@ -20,6 +20,9 @@
 		    <div class="center"> 
 				<div>
 				<h1>Courses</h1>
+				<div th:if="${error != null}">
+        			<p class="error-text"><span th:text="${error}"></span></p>
+       			</div>
 				<table class ="table table-dark table-striped table-dark-custom">
 					<thead>
 						<tr>

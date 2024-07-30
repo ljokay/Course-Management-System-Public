@@ -60,11 +60,11 @@ public class BaseController implements ErrorController {
     public String signOut( HttpServletRequest request,
     		 RedirectAttributes redirectAttributes) {
     	
-    	
+    	request.getSession().invalidate();
     	request.getSession().setAttribute("user", null);
     	
     	
-    	return "index";
+    	return "redirect:/";
     }
     
     @PostMapping("/signup")

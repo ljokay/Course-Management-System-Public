@@ -156,39 +156,35 @@ public class StudentController implements ErrorController {
 		
 		//Error handling for incorrect grade
 		if (student.getGrade() != c.getGrade()) {
-			model.addAttribute("error", "Student grade does not match course grade");
-    		return "enroll";
+			redirectAttributes.addFlashAttribute("error", "Student grade does not match course grade");
+    		return "redirect:/studentcourses";
 		}
 		//Error handling for too many credits
 		if (student.getCredits() > 16) {
 			model.addAttribute("error", "Enrolled credits exceeds maxiumum allowed credits (16)");
 		}
-		if (c != null) {
-			if (c.getCredits() + student.getCredits() <= 16
-					&& c.getGrade().equals(student.getGrade()) && c.getSeats() > 1) {
-	            s = new StudentCourses(student.getId(), courseId);
-	            studentCoursesRepo.save(s);
-	            int credits = student.getCredits();
-	            credits += c.getCredits();
-	            student.setCredits(credits);
-	            studentRepo.save(student);
-	            int seats = c.getSeats();
-	            c.setSeats(seats - 1);
-	            courseRepo.save(c);
-	            List<Assignment> a = assignmentRepo.findByCourseId(courseId);
-	            for (Assignment a1 : a) {
-	            	if (a1.getDueDate().before(d)) {
-		            	Assignment create = new Assignment(courseId.longValue(), student.getId(), a1.getName(), a1.getDescription(), 
-		            			a1.getDueDate(), null, a1.getTotalPoints(), "N");
-		            	assignmentRepo.save(create);
-	            	}
-	            }
-	            redirectAttributes.addFlashAttribute("toastMessage", "Successfully registered for " + c.getName());
-	            return "redirect:/studentcourses";
-			}
-        } else {
-            return "redirect:/studentcourses";
-        }
+		if (c.getCredits() + student.getCredits() <= 16
+				&& c.getGrade().equals(student.getGrade()) && c.getSeats() > 1) {
+		    s = new StudentCourses(student.getId(), courseId);
+		    studentCoursesRepo.save(s);
+		    int credits = student.getCredits();
+		    credits += c.getCredits();
+		    student.setCredits(credits);
+		    studentRepo.save(student);
+		    int seats = c.getSeats();
+		    c.setSeats(seats - 1);
+		    courseRepo.save(c);
+		    List<Assignment> a = assignmentRepo.findByCourseId(courseId);
+		    for (Assignment a1 : a) {
+		    	if (a1.getDueDate().before(d)) {
+		        	Assignment create = new Assignment(courseId.longValue(), student.getId(), a1.getName(), a1.getDescription(), 
+		        			a1.getDueDate(), null, a1.getTotalPoints(), "N");
+		        	assignmentRepo.save(create);
+		    	}
+		    }
+		    redirectAttributes.addFlashAttribute("toastMessage", "Successfully registered for " + c.getName());
+		    return "redirect:/studentcourses";
+		}
 		return "redirect:/studentcourses";
 	}
 	

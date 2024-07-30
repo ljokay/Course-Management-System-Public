@@ -54,6 +54,10 @@ public class TeacherController implements ErrorController {
     		 HttpServletRequest request) {
     	
     	User u = (User) request.getSession().getAttribute("user");
+    	
+    	if (u == null || u.getRole() != Role.TEACHER) {
+    		return "index";
+    	}
     	    	
     	List<Course> c = courseRepo.findAll();
     	List<Course> teacherCourses = new ArrayList<>();
@@ -87,6 +91,12 @@ public class TeacherController implements ErrorController {
     		 HttpServletRequest request,
     		 @RequestParam("courseId") Long courseId) {
     	
+    	User u = (User) request.getSession().getAttribute("user");
+    	
+    	if (u == null || u.getRole() != Role.TEACHER) {
+    		return "index";
+    	}
+    	
     	Course c = courseRepo.findById(courseId.longValue());
     	
     	model.addAttribute("course", c);
@@ -103,6 +113,12 @@ public class TeacherController implements ErrorController {
         @RequestParam("description") String description,
     	@RequestParam("endDate") String dueDate,
         @RequestParam("totalPoints") int totalPoints) {
+    	
+    	User u = (User) request.getSession().getAttribute("user");
+    	
+    	if (u == null || u.getRole() != Role.TEACHER) {
+    		return "index";
+    	}
 		
     	Date due_date = java.sql.Date.valueOf(dueDate);
     	
@@ -126,6 +142,12 @@ public class TeacherController implements ErrorController {
     public String courseAssignment(Model model,
     		 HttpServletRequest request,
     		 @RequestParam("courseId") Long courseId) {
+    		
+    	User u = (User) request.getSession().getAttribute("user");
+    	
+    	if (u == null || u.getRole() != Role.TEACHER) {
+    		return "index";
+    	}
     	
     	List<Assignment> studentAssignment = assignmentRepo.findByCourseId(courseId.longValue());
     	
@@ -150,6 +172,12 @@ public class TeacherController implements ErrorController {
     		 HttpServletRequest request,
     		 @RequestParam("courseId") Long courseId) {
     	
+    	User u = (User) request.getSession().getAttribute("user");
+    	
+    	if (u == null || u.getRole() != Role.TEACHER) {
+    		return "index";
+    	}
+    	
     	List<StudentCourses> studentCourses = studentCourseRepo.findByCourseId(courseId.longValue());
     	
     	List<User> students = new ArrayList<>();
@@ -171,14 +199,32 @@ public class TeacherController implements ErrorController {
     }
 
 	@PostMapping("/grade")
-	public String grade(Model model, @RequestParam Long assignmentId, @RequestParam int pointsEarned) {
+	public String grade(Model model, RedirectAttributes ra, @RequestParam(value = "assignmentId", required = false) Long assignmentId, HttpServletRequest request,
+			@RequestParam(value = "pointsEarned", required = false) Integer pointsEarned) {
+		
+		
+		User u = (User) request.getSession().getAttribute("user");
 		Assignment assignment = assignmentRepo.findById(assignmentId).orElse(null);
+    	
+    	if (u == null || u.getRole() != Role.TEACHER) {
+    		return "index";
+    	}
+    	
+    	if (pointsEarned == null) {
+    		ra.addAttribute("courseId", assignment.getCourseId());
+    		ra.addFlashAttribute("error", "Assignment not submitted.");
+    		return "redirect:/courseAssignments";
+    	}
+    	
+    	
 		long courseId = assignment.getCourseId();
 		if (assignment.getIsSubmitted().equals("Y")) {
 			assignment.setPointsEarned(pointsEarned);
 			if(assignment != null) {
 				assignmentRepo.save(assignment);
 			}
+		} else {
+			return "redirect:/courseAssignments";
 		}
 		
 		List<Assignment> studentAssignment = assignmentRepo.findByCourseId(courseId);
