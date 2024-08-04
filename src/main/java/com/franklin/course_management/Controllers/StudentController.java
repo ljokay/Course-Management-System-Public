@@ -276,11 +276,16 @@ public class StudentController implements ErrorController {
     		}
         }
 		
-		if (!assignment.getIsSubmitted().equals("Y")) {
+		Date currentDate = new Date();
+
+		if (!assignment.getIsSubmitted().equals("Y") && !assignment.getDueDate().before(currentDate)) {
 			assignment.setIsSubmitted("Y");
 			assignmentRepo.save(assignment);
-		} else {
-			
+		}
+		else if (assignment.getDueDate().before(currentDate)) {
+			model.addAttribute("error", "Assignmnet is late");
+		}
+		else {
 			model.addAttribute("error", "Assignment already submitted.");
 			model.addAttribute("assignments", studentAssignment);
 			return "assignments";
